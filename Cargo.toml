@@ -1,0 +1,20 @@
+[package]
+name = "chance"
+version = "0.0.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT OR Apache-2.0"
+homepage = "https://github.com/nvzqz/chance-rs"
+repository = "https://github.com/nvzqz/chance-rs"
+documentation = "https://docs.rs/chance"
+edition = "2018"
+description = "[WIP] Random number generation"
+categories = ["algorithms", "no-std"]
+keywords = ["random", "rand", "rng"]
+include = ["Cargo.toml", "src/**/*.rs", "README.md", "CHANGELOG.md", "LICENSE*"]
+
+[badges]
+maintenance = { status = "actively-developed" }
+
+[features]
+default = ["std"]
+std = []
