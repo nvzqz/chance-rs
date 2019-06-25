@@ -7,6 +7,7 @@
 #[cfg(feature = "std")]
 extern crate core;
 
+pub mod arch;
 pub mod os;
 pub mod rand;
 pub mod rng;
