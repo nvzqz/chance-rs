@@ -5,6 +5,39 @@ use core::convert::Infallible;
 #[cfg(feature = "std")]
 pub mod io;
 
+/// Fills the contents of `buf` using `rng` without fail.
+#[inline]
+pub fn fill_bytes_via_next<R>(rng: &mut R, buf: &mut [u8])
+    where R: ?Sized + Rng
+{
+    match try_fill_bytes_via_next(rng, buf) {
+        Ok(()) => {},
+        Err(e) => match e {},
+    }
+}
+
+/// Fills the contents of `buf` using `rng`, returning an error upon failure.
+pub fn try_fill_bytes_via_next<R>(rng: &mut R, buf: &mut [u8]) -> Result<(), R::Error>
+    where R: ?Sized + TryRng
+{
+    let mut rem = buf;
+    while rem.len() >= 8 {
+        let (a, b) = rem.split_at_mut(8);
+        let chunk = rng.try_next_u64()?.to_le_bytes();
+        a.copy_from_slice(&chunk);
+        rem = b;
+    }
+    let len = rem.len();
+    if len > 4 {
+        let chunk = rng.try_next_u64()?.to_le_bytes();
+        rem.copy_from_slice(&chunk[..len]);
+    } else if len > 0 {
+        let chunk = rng.try_next_u32()?.to_le_bytes();
+        rem.copy_from_slice(&chunk[..len]);
+    }
+    Ok(())
+}
+
 /// A type that can be used to generate random numbers without fail.
 pub trait Rng {
     /// Fills `buf` with random bytes from `self`.
