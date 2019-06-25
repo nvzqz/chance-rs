@@ -6,3 +6,13 @@
 
 #[cfg(feature = "std")]
 extern crate core;
+
+pub mod os;
+pub mod rand;
+pub mod rng;
+
+#[doc(inline)]
+pub use self::{
+    rand::{Rand, TryRand},
+    rng::{Rng, TryRng},
+};
