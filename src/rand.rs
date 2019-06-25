@@ -112,3 +112,17 @@ impl TryRand for u128 {
         rng.try_next_u128()
     }
 }
+
+impl TryRand for usize {
+    #[inline]
+    fn try_rand<R: ?Sized + TryRng>(rng: &mut R) -> Result<Self, R::Error> {
+        #[cfg(target_pointer_width = "16")]
+        { rng.try_next_u16().map(|x| x as _) }
+
+        #[cfg(target_pointer_width = "32")]
+        { rng.try_next_u32().map(|x| x as _) }
+
+        #[cfg(target_pointer_width = "64")]
+        { rng.try_next_u64().map(|x| x as _) }
+    }
+}
