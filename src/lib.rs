@@ -7,13 +7,13 @@
 #[cfg(feature = "std")]
 extern crate core;
 
+mod rand;
 pub mod arch;
 pub mod platform;
-pub mod rand;
 pub mod rng;
 
 #[doc(inline)]
 pub use self::{
-    rand::{Rand, TryRand},
+    rand::Rand,
     rng::{Rng, TryRng},
 };
