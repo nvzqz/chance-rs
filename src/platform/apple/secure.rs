@@ -39,6 +39,16 @@ impl TryRng for SecureRng {
 
     #[inline]
     fn try_fill_bytes(&mut self, buf: &mut [u8]) -> Result<(), Self::Error> {
+        (&*self).try_fill_bytes(buf)
+    }
+}
+
+// OK because `SecRandomCopyBytes` takes a `const` pointer
+impl TryRng for &SecureRng {
+    type Error = SecureRngError;
+
+    #[inline]
+    fn try_fill_bytes(&mut self, buf: &mut [u8]) -> Result<(), Self::Error> {
         let len = buf.len() as isize;
         let ptr = buf.as_mut_ptr();
         match unsafe { SecRandomCopyBytes(self.sec_random, len, ptr) } {
