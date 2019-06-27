@@ -23,19 +23,19 @@ extern {
 /// - tvOS 9.0+
 /// - watchOS 2.0+
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SecureRng {
-    sec_random: *const c_void
+pub struct SecRandom {
+    sec_random_ref: *const c_void
 }
 
-impl Default for SecureRng {
+impl Default for SecRandom {
     #[inline]
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TryRng for SecureRng {
-    type Error = SecureRngError;
+impl TryRng for SecRandom {
+    type Error = SecRandomError;
 
     #[inline]
     fn try_fill_bytes(&mut self, buf: &mut [u8]) -> Result<(), Self::Error> {
@@ -44,34 +44,34 @@ impl TryRng for SecureRng {
 }
 
 // OK because `SecRandomCopyBytes` takes a `const` pointer
-impl TryRng for &SecureRng {
-    type Error = SecureRngError;
+impl TryRng for &SecRandom {
+    type Error = SecRandomError;
 
     #[inline]
     fn try_fill_bytes(&mut self, buf: &mut [u8]) -> Result<(), Self::Error> {
         let len = buf.len() as isize;
         let ptr = buf.as_mut_ptr();
-        match unsafe { SecRandomCopyBytes(self.sec_random, len, ptr) } {
+        match unsafe { SecRandomCopyBytes(self.sec_random_ref, len, ptr) } {
             errSecSuccess => Ok(()),
-            err => Err(SecureRngError(err)),
+            err => Err(SecRandomError(err)),
         }
     }
 }
 
-impl SecureRng {
+impl SecRandom {
     /// Creates a new instance for the default `SecRandomRef`.
     #[inline]
     pub const fn new() -> Self {
-        SecureRng { sec_random: kSecRandomDefault }
+        SecRandom { sec_random_ref: kSecRandomDefault }
     }
 
     /// Creates a new instance for a `SecRandomRef`.
     #[inline]
-    pub const unsafe fn from_sec_random(sec_random: *const c_void) -> Self {
-        SecureRng { sec_random }
+    pub const unsafe fn from_ref(sec_random_ref: *const c_void) -> Self {
+        SecRandom { sec_random_ref }
     }
 }
 
-/// An error returned when [`SecureRng`](struct.SecureRng.html) fails.
+/// An error returned when [`SecRandom`](struct.SecRandom.html) fails.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SecureRngError(i32);
+pub struct SecRandomError(i32);

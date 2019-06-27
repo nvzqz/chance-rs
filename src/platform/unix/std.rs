@@ -3,25 +3,25 @@ use crate::rng::{TryRng, io::ReadRng};
 
 /// Random data sourced from `/dev/random`.
 #[derive(Debug)]
-pub struct DevRandomRng(File);
+pub struct DevRandom(File);
 
-impl DevRandomRng {
+impl DevRandom {
     /// Opens `/dev/random` for reading.
     #[inline]
     pub fn new() -> io::Result<Self> {
-        File::open("/dev/random").map(DevRandomRng)
+        File::open("/dev/random").map(DevRandom)
     }
 }
 
 /// Random data sourced from `/dev/urandom`.
 #[derive(Debug)]
-pub struct DevURandomRng(File);
+pub struct DevURandom(File);
 
-impl DevURandomRng {
+impl DevURandom {
     /// Opens `/dev/urandom` for reading.
     #[inline]
     pub fn new() -> io::Result<Self> {
-        File::open("/dev/urandom").map(DevURandomRng)
+        File::open("/dev/urandom").map(DevURandom)
     }
 }
 
@@ -38,4 +38,4 @@ macro_rules! impl_try_rng {
     )+ }
 }
 
-impl_try_rng!(DevRandomRng, DevURandomRng);
+impl_try_rng!(DevRandom, DevURandom);

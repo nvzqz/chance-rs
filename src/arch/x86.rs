@@ -41,7 +41,7 @@ use core::arch::x86_64::{
 /// > generating seed values from RDRAND, but it's generally best and simplest
 /// > to just use RDSEED for PRNG seeding.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct RdRandRng(());
+pub struct RdRand(());
 
 /// A random number generator that uses the `rdseed` instruction.
 ///
@@ -67,7 +67,7 @@ pub struct RdRandRng(());
 /// > have multiplicative prediction resistance
 /// > RDSEED is intended for seeding other PRNGs.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub struct RdSeedRng(());
+pub struct RdSeed(());
 
 use crate::TryRng;
 
@@ -188,6 +188,6 @@ macro_rules! imp {
 }
 
 imp! {
-    RdRandRng, RdRandRngError, "rdrand", is_x86_feature_detected!("rdrand"), _rdrand16_step, _rdrand32_step, _rdrand64_step;
-    RdSeedRng, RdSeedRngError, "rdseed", is_x86_feature_detected!("rdseed"), _rdseed16_step, _rdseed32_step, _rdseed64_step;
+    RdRand, RdRandError, "rdrand", is_x86_feature_detected!("rdrand"), _rdrand16_step, _rdrand32_step, _rdrand64_step;
+    RdSeed, RdSeedError, "rdseed", is_x86_feature_detected!("rdseed"), _rdseed16_step, _rdseed32_step, _rdseed64_step;
 }
