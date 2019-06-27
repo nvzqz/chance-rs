@@ -8,7 +8,7 @@
 extern crate core;
 
 pub mod arch;
-pub mod os;
+pub mod platform;
 pub mod rand;
 pub mod rng;
 
