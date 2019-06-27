@@ -8,6 +8,7 @@
 extern crate core;
 
 mod rand;
+mod rand_in;
 pub mod arch;
 pub mod platform;
 pub mod rng;
@@ -15,5 +16,6 @@ pub mod rng;
 #[doc(inline)]
 pub use self::{
     rand::Rand,
+    rand_in::RandIn,
     rng::{Rng, TryRng},
 };
