@@ -14,6 +14,17 @@ pub mod ext;
 pub mod platform;
 pub mod rng;
 
+/// Commonly used traits. Meant to be imported via `use chance::prelude::*`.
+pub mod prelude {
+    #[doc(no_inline)]
+    pub use crate::{
+        rand::Rand,
+        rand_in::RandIn,
+        ext::SliceExt,
+        rng::{Rng, TryRng},
+    };
+}
+
 #[doc(inline)]
 pub use self::{
     rand::Rand,

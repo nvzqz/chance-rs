@@ -1,5 +1,5 @@
 use core::ops::Range;
-use crate::{Rng, TryRng};
+use crate::prelude::*;
 
 /// A type that can have a random instance retrieved from an instance of `A`.
 pub trait RandIn<A>: Sized {

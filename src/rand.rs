@@ -1,6 +1,6 @@
 //! Generate random values.
 
-use crate::{Rng, TryRng};
+use crate::prelude::*;
 
 /// A type that can be generated from an `Rng` or `TryRng`.
 pub trait Rand: Sized {

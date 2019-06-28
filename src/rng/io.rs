@@ -1,7 +1,7 @@
 //! Random numbers from I/O.
 
 use std::io;
-use crate::TryRng;
+use crate::prelude::*;
 
 /// A wrapper around an
 /// [`io::Read`](https://doc.rust-lang.org/std/io/trait.Read.html) for using the

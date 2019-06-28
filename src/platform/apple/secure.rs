@@ -1,7 +1,7 @@
 #![allow(non_camel_case_types, non_upper_case_globals)]
 
 use core::{ffi::c_void, ptr};
-use crate::TryRng;
+use crate::prelude::*;
 
 type c_int = i32;
 

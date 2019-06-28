@@ -22,6 +22,8 @@ use core::arch::x86_64::{
     _rdseed64_step,
 };
 
+use crate::prelude::*;
+
 /// A random number generator that uses the `rdrand` instruction.
 ///
 /// It is considered to be a cryptographically secure pseudorandom number
@@ -68,8 +70,6 @@ pub struct RdRand(());
 /// > RDSEED is intended for seeding other PRNGs.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct RdSeed(());
-
-use crate::TryRng;
 
 macro_rules! imp {
     ($($t:ident, $e:ident, $instr:expr, $detect_instr:expr, $f16:ident, $f32:ident, $f64:ident;)+) => { $(

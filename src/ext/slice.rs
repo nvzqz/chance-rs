@@ -1,4 +1,4 @@
-use crate::{RandIn, Rng, TryRng};
+use crate::prelude::*;
 
 /// Extended functionality for slices.
 pub trait SliceExt<A> {
