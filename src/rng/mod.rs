@@ -103,7 +103,7 @@ pub trait TryRng {
     /// that panics if an error occurs.
     #[inline]
     fn as_panicking(&mut self) -> &mut PanickingRng<Self> {
-        PanickingRng::from_ref(self)
+        PanickingRng::from_mut(self)
     }
 
     /// Fills `buf` with random bytes from `self`, returning an error upon

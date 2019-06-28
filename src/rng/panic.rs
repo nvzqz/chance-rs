@@ -18,7 +18,7 @@ impl<R: ?Sized> PanickingRng<R> {
     /// Wraps the mutable reference `rng` as a mutable reference of type
     /// `PanickingRng`.
     #[inline]
-    pub fn from_ref(rng: &mut R) -> &mut Self {
+    pub fn from_mut(rng: &mut R) -> &mut Self {
         unsafe { &mut *(rng as *mut R as *mut Self) }
     }
 }
