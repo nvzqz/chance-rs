@@ -22,7 +22,7 @@ pub mod prelude {
         rand::Rand,
         rand_in::RandIn,
         ext::SliceExt,
-        rng::{Rng, TryRng},
+        rng::{Rng, TryRng, CryptoRng},
         shuffle::Shuffle,
     };
 }

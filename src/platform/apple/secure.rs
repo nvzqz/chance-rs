@@ -58,6 +58,8 @@ impl TryRng for &SecRandom {
     }
 }
 
+impl CryptoRng for SecRandom {}
+
 impl SecRandom {
     /// Creates a new instance for the default `SecRandomRef`.
     #[inline]

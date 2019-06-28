@@ -187,3 +187,11 @@ impl<R: ?Sized + Rng> TryRng for R {
 
 // TODO: Figure out how to do the following without conflicting:
 // impl<R: ?Sized + TryRng> TryRng for &mut R
+
+/// A marker trait used to indicate that an [`Rng`](trait.Rng.html) or
+/// [`TryRng`](trait.TryRng.html) is cryptographically secure.
+pub trait CryptoRng {}
+
+impl<R: ?Sized + CryptoRng> CryptoRng for &R {}
+
+impl<R: ?Sized + CryptoRng> CryptoRng for &mut R {}

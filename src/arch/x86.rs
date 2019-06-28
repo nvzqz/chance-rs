@@ -45,6 +45,8 @@ use crate::prelude::*;
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct RdRand(());
 
+impl CryptoRng for RdRand {}
+
 /// A random number generator that uses the `rdseed` instruction.
 ///
 /// It is considered to be a non-deterministic random bit generator.
@@ -70,6 +72,8 @@ pub struct RdRand(());
 /// > RDSEED is intended for seeding other PRNGs.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct RdSeed(());
+
+impl CryptoRng for RdSeed {}
 
 macro_rules! imp {
     ($($t:ident, $e:ident, $instr:expr, $detect_instr:expr, $f16:ident, $f32:ident, $f64:ident;)+) => { $(
