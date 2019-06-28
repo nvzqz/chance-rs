@@ -10,6 +10,7 @@ extern crate core;
 mod rand;
 mod rand_in;
 pub mod arch;
+pub mod ext;
 pub mod platform;
 pub mod rng;
 
