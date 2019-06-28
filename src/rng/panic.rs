@@ -7,6 +7,13 @@ use crate::prelude::*;
 #[repr(transparent)]
 pub struct PanickingRng<R: ?Sized>(pub R);
 
+impl<R> From<R> for PanickingRng<R> {
+    #[inline]
+    fn from(rng: R) -> Self {
+        PanickingRng(rng)
+    }
+}
+
 impl<R: ?Sized> PanickingRng<R> {
     /// Wraps the mutable reference `rng` as a mutable reference of type
     /// `PanickingRng`.
