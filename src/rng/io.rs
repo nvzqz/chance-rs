@@ -6,7 +6,7 @@ use crate::prelude::*;
 /// A wrapper around an
 /// [`io::Read`](https://doc.rust-lang.org/std/io/trait.Read.html) for using the
 /// type as a random number generator.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(transparent)]
 pub struct ReadRng<R: ?Sized>(pub R);
 
