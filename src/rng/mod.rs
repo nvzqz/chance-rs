@@ -2,6 +2,9 @@
 
 use core::convert::Infallible;
 
+mod panic;
+pub use self::panic::PanickingRng;
+
 #[cfg(feature = "std")]
 pub mod io;
 
@@ -88,6 +91,20 @@ pub trait Rng {
 pub trait TryRng {
     /// The error reported when `Self` fails to generate random numbers.
     type Error;
+
+    /// Converts `self` into an [`Rng`](trait.Rng.html) that panics if an error
+    /// occurs.
+    #[inline]
+    fn into_panicking(self) -> PanickingRng<Self> where Self: Sized {
+        PanickingRng(self)
+    }
+
+    /// Converts the mutable reference `self` into an [`Rng`](trait.Rng.html)
+    /// that panics if an error occurs.
+    #[inline]
+    fn as_panicking(&mut self) -> &mut PanickingRng<Self> {
+        PanickingRng::from_ref(self)
+    }
 
     /// Fills `buf` with random bytes from `self`, returning an error upon
     /// failure.
