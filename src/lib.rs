@@ -9,6 +9,7 @@ extern crate core;
 
 mod rand;
 mod rand_in;
+mod shuffle;
 pub mod arch;
 pub mod ext;
 pub mod platform;
@@ -22,6 +23,7 @@ pub mod prelude {
         rand_in::RandIn,
         ext::SliceExt,
         rng::{Rng, TryRng},
+        shuffle::Shuffle,
     };
 }
 
@@ -30,4 +32,5 @@ pub use self::{
     rand::Rand,
     rand_in::RandIn,
     rng::{Rng, TryRng},
+    shuffle::*,
 };

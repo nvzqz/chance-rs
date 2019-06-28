@@ -31,12 +31,6 @@ pub trait SliceExt<A> {
     /// Returns a random mutable reference in `self` without checking whether
     /// `self` is empty, returning an error if `rng` fails.
     unsafe fn try_get_rand_mut_unchecked<'a, R: ?Sized + TryRng>(&'a mut self, rng: &mut R) -> Result<&'a mut A, R::Error>;
-
-    /// Shuffles `self` in-place without fail.
-    fn shuffle<R: ?Sized + Rng>(&mut self, rng: &mut R);
-
-    /// Shuffles `self` in-place, returning an error if `rng` fails at any point.
-    fn try_shuffle<R: ?Sized + TryRng>(&mut self, rng: &mut R) -> Result<(), R::Error>;
 }
 
 impl<A> SliceExt<A> for [A] {
@@ -78,22 +72,5 @@ impl<A> SliceExt<A> for [A] {
     #[inline]
     unsafe fn try_get_rand_mut_unchecked<'a, R: ?Sized + TryRng>(&'a mut self, rng: &mut R) -> Result<&'a mut A, R::Error> {
         <&mut A>::try_rand_in_unchecked(rng, self)
-    }
-
-    #[inline]
-    fn shuffle<R: ?Sized + Rng>(&mut self, rng: &mut R) {
-        match self.try_shuffle(rng) {
-            Ok(()) => {},
-            Err(err) => match err {},
-        }
-    }
-
-    #[inline]
-    fn try_shuffle<R: ?Sized + TryRng>(&mut self, rng: &mut R) -> Result<(), R::Error> {
-        for i in 0..self.len() {
-            let j = unsafe { usize::try_rand_in_unchecked(rng, 0..self.len())? };
-            self.swap(i, j);
-        }
-        Ok(())
     }
 }
