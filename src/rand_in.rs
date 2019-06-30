@@ -26,33 +26,31 @@ impl<'a, A> RandIn<&'a [A]> for &'a A {
     #[inline]
     fn rand_in<R: ?Sized + Rng>(rng: &mut R, slice: &'a [A]) -> Option<Self> {
         if slice.is_empty() {
-            return None;
+            None
+        } else {
+            unsafe { Some(Self::rand_in_unchecked(rng, slice)) }
         }
-        // Safe because it will always return a value within the range
-        let index = unsafe { usize::rand_in_unchecked(rng, 0..slice.len()) };
-        slice.get(index)
     }
 
     #[inline]
     fn try_rand_in<R: ?Sized + TryRng>(rng: &mut R, slice: &'a [A]) -> Result<Option<Self>, R::Error> {
         if slice.is_empty() {
-            return Ok(None);
+            Ok(None)
+        } else {
+            unsafe { Self::try_rand_in_unchecked(rng, slice).map(Some) }
         }
-        // Safe because it will always return a value within the range
-        let index = unsafe { usize::try_rand_in_unchecked(rng, 0..slice.len())? };
-        Ok(slice.get(index))
     }
 
     #[inline]
     unsafe fn rand_in_unchecked<R: ?Sized + Rng>(rng: &mut R, slice: &'a [A]) -> Self {
-        // Safe because it will always return a value within the range
+        // Index is safe because it will always return a value within the range
         let index = usize::rand_in_unchecked(rng, 0..slice.len());
         slice.get_unchecked(index)
     }
 
     #[inline]
     unsafe fn try_rand_in_unchecked<R: ?Sized + TryRng>(rng: &mut R, slice: &'a [A]) -> Result<Self, R::Error> {
-        // Safe because it will always return a value within the range
+        // Index is safe because it will always return a value within the range
         let index = usize::try_rand_in_unchecked(rng, 0..slice.len())?;
         Ok(slice.get_unchecked(index))
     }
@@ -62,33 +60,31 @@ impl<'a, A> RandIn<&'a mut [A]> for &'a mut A {
     #[inline]
     fn rand_in<R: ?Sized + Rng>(rng: &mut R, slice: &'a mut [A]) -> Option<Self> {
         if slice.is_empty() {
-            return None;
+            None
+        } else {
+            unsafe { Some(Self::rand_in_unchecked(rng, slice)) }
         }
-        // Safe because it will always return a value within the range
-        let index = unsafe { usize::rand_in_unchecked(rng, 0..slice.len()) };
-        slice.get_mut(index)
     }
 
     #[inline]
     fn try_rand_in<R: ?Sized + TryRng>(rng: &mut R, slice: &'a mut [A]) -> Result<Option<Self>, R::Error> {
         if slice.is_empty() {
-            return Ok(None);
+            Ok(None)
+        } else {
+            unsafe { Self::try_rand_in_unchecked(rng, slice).map(Some) }
         }
-        // Safe because it will always return a value within the range
-        let index = unsafe { usize::try_rand_in_unchecked(rng, 0..slice.len())? };
-        Ok(slice.get_mut(index))
     }
 
     #[inline]
     unsafe fn rand_in_unchecked<R: ?Sized + Rng>(rng: &mut R, slice: &'a mut [A]) -> Self {
-        // Safe because it will always return a value within the range
+        // Index is safe because it will always return a value within the range
         let index = usize::rand_in_unchecked(rng, 0..slice.len());
         slice.get_unchecked_mut(index)
     }
 
     #[inline]
     unsafe fn try_rand_in_unchecked<R: ?Sized + TryRng>(rng: &mut R, slice: &'a mut [A]) -> Result<Self, R::Error> {
-        // Safe because it will always return a value within the range
+        // Index is safe because it will always return a value within the range
         let index = usize::try_rand_in_unchecked(rng, 0..slice.len())?;
         Ok(slice.get_unchecked_mut(index))
     }
